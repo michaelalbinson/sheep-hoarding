@@ -83,16 +83,20 @@ class Sheep():
 
 	def followNeighbor(self):
 		self.findNeighbor()
-		if self.neighbor.velocity != [0, 0]:
-			return self.neighbor.velocity/self.speed
-		else:
+		x_mag =  int(self.neighbor.position["x"]) - int(self.position["x"])
+		y_mag = int(self.neighbor.position["y"]) - int(self.position["y"])
+		total_magnitude = pow((pow(x_mag, 2) + pow(y_mag, 2)), .5)
+		if (total_magnitude == 0):
 			return [0, 0]
+		directional_vector = [0, 0]
+		directional_vector[0] = x_mag/total_magnitude
+		directional_vector[1] = y_mag/total_magnitude
+		return directional_vector
 
 
 	def move_sheep(self, temp_vector):
-		self.velocity = [temp_vector[0]*self.speed, temp_vector[1]*self.speed]
-		self.position["x"] = self.position["x"] + self.velocity[0]*TIME
-		self.position["y"] = self.position["y"] + self.velocity[0]*TIME
+		self.position["x"] = self.position["x"] + self.speed*TIME*temp_vector[0]
+		self.position["y"] = self.position["y"] + self.speed*TIME*temp_vector[1]
 		self._pos = setPos(self.position)
 
             
@@ -101,6 +105,7 @@ class Sheep():
 		if (i != [0, 0]):
 			self.move_sheep(i)
 			return
+
 
 		i = self.detectDrone()
 		if (i != [0, 0]):

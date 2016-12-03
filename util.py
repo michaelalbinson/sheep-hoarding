@@ -18,4 +18,4 @@ def randomDroneStartingPosition():
 	return {"x": x, "y": y}
 
 def setPos(position):
-	return (position["x"], position["y"])
+	return (int(position["x"]), int(position["y"]))
