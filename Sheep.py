@@ -24,17 +24,17 @@ class Sheep():
 
 
 	def detectDrone(self):
-		### dectect if drone is in range
+		### detect if drone is in range
 		if self.allCreatures == {}:
 			return
 		for drone in self.allCreatures["drones"]:
 			closest_drone_dist = 6000
 			temp_drone = drone
-			temp_drone_dist = pow((pow(temp_drone.position["x"]-self.position["x"], 2))+(pow(drone.position["y"]-self.position,2)), 0.5)
+			temp_drone_dist = pow(((pow(temp_drone.position["x"] - self.position["x"], 2)) + (pow(drone.position["y"] - self.position["y"], 2))), 0.5)
 			if(closest_drone_dist > temp_drone_dist):
 				closest_drone = temp_drone ## finds the closest drone to sheep
-		if (pow((pow(closest_drone.position["x"]-self.position["x"], 2))+pow(closest_drone.position["y"]-self.position,2), 0.5) < self.detectionRadius):
-			temp_vector = [-(closest_drone.position["x"]-self.position["x"]), -(closest_drone.position["y"] - self.position["y"])]
+		if ((pow(pow(closest_drone.position["x"] - self.position["x"], 2) + pow(closest_drone.position["y"] - self.position["y"], 2), 0.5)) < self.detectionRadius):
+			temp_vector = [-(closest_drone.position["x"]-self.position["x"]), - (closest_drone.position["y"] - self.position["y"])]
 		else:
 			temp_vector = [0, 0]
 		return temp_vector
@@ -53,7 +53,7 @@ class Sheep():
 			if(closest_wolf_dist> temp_wolf_dist):
 				closest_wolf = temp_wolf
             
-		if (pow((pow(closest_wolf.position["x"]-self.position["x"], 2)+pow(closest_wolf.position["y"]-self.position,2)), 0.5), 2) < self.detectionRadius:
+		if ((pow(pow(closest_wolf.position["x"] - self.position["x"], 2) + pow(closest_wolf.position["y"] - self.position["y"], 2), 0.5)) < self.detectionRadius):
 			temp_vector = [-(closest_wolf.position["x"]-self.position["x"]), -(closest_wolf.position["y"] - self.position["y"])]
 		else:
 			temp_vector = [0, 0]
@@ -71,26 +71,28 @@ class Sheep():
 				closest_sheep_dist_1 = 6000
 				closest_sheep_dist_2 = 6000
 				temp_sheep = sheep
-				temp_sheep_dist = pow((pow(temp_sheep.position["x"]- self.position["x"], 2) + pow(temp_sheep.position["y"] - self.position["y"],2)), 0.5)
+				closestSheep = None
+				temp_sheep_dist = pow((pow(temp_sheep.position["x"] - self.position["x"], 2) + pow(temp_sheep.position["y"] - self.position["y"],2)), 0.5)
 
 				if(closest_sheep_dist_2 > temp_sheep_dist and closest_sheep_dist_1 > temp_sheep_dist):
-					closest_sheep_1 = temp_sheep
+					closestSheep = temp_sheep
 				else:
-					closest_sheep_2 = temp_sheep
+					closestSheep = temp_sheep
 
-		self.neighbor = [closest_sheep_1, closest_sheep_2]
+		self.neighbor = closestSheep
 
 	def followNeighbor(self):
 		self.findNeighbor()
-		if self.neighbor[0].velocity != [0, 0]:
-			return self.neighbor[0].velocity/self.speed
+		if self.neighbor.velocity != [0, 0]:
+			return self.neighbor.velocity/self.speed
 		else:
 			return [0, 0]
 
 
 	def move_sheep(self, temp_vector):
 		self.velocity = [temp_vector[0]*self.speed, temp_vector[1]*self.speed]
-		self.position = [self.position["x"] + self.velocity[0]*TIME, self.position["y"] + self.velocity[0]*TIME]
+		self.position["x"] = self.position["x"] + self.velocity[0]*TIME
+		self.position["y"] = self.position["y"] + self.velocity[0]*TIME
 		self._pos = setPos(self.position)
 
             
