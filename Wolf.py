@@ -12,10 +12,14 @@ class Wolf():
 		self.detectionRadius = 20;
 		self.slowSpeed = 7;
 		self.fastSpeed = 10;
+		self.allCreatures = {}
 		if(isAlpha):
 			self.image = alphaWolf.convert()
 		else:
 			self.image = wolf.convert()
+
+	def update(self, creatures):
+		self.allCreatures = creatures;
 
 	def isSheepPresent(self):
 		pass

@@ -10,7 +10,10 @@ class Drone():
 		self.numberOfSheep = numSheep
 		self.detectionRadius = 10
 		self.speed = 10;
-		pass
+		self.allCreatures = {}
+
+	def update(self, creatures):
+		self.allCreatures = creatures;
 
 	def scan(self):
 		self.findThings()
