@@ -1,5 +1,5 @@
 from pygame import image
-from util import randomWolfStartingPosition
+from util import randomWolfStartingPosition, setPos, TIME
 
 wolf = image.load("wolf.gif")
 alphaWolf = image.load("alpha-wolf.gif")
@@ -19,7 +19,7 @@ class Wolf():
 		else:
 			self.image = wolf.convert()
 
-	def update(self, creatures):
+	def setCreatures(self, creatures):
 		self.allCreatures = creatures;
 
 	def isSheepPresent(self):
@@ -35,4 +35,7 @@ class Wolf():
 		pass
 
 	def move(self):
+		pass
+
+	def updatePosition(self):
 		pass

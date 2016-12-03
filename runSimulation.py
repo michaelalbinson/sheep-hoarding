@@ -16,9 +16,15 @@ def setCreatureList(criteria):
 			continue
 
 		for creature in criteria[index]:
-			creature.update(criteria)
+			creature.setCreatures(criteria)
 
+def update(criteria):
+	for index in criteria:
+		if index == "trees":
+			continue
 
+		for creature in criteria[index]:
+			creature.updatePosition()
 
 def startSim(criteria):
 	setCreatureList(criteria)
@@ -26,6 +32,8 @@ def startSim(criteria):
 	while 1:
 		for event in pygame.event.get():
 			if event.type == pygame.QUIT: sys.exit()
+
+		update(criteria)
 
 		screen.fill(color)
 		for e in criteria:
@@ -70,9 +78,6 @@ def start(trees, sheep, wolves, drones):
 	num_drones = drones
 	criteria = getObjects()
 	startSim(criteria)
-
-def refresh():
-	pass
 
 
 start(20, 5, 5, 5)
