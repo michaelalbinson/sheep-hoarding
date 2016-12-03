@@ -10,9 +10,30 @@ num_sheep = 0
 num_wolves = 0
 num_drones = 0
 
+def setCreatureList(criteria):
+	for index in criteria:
+		if index == "trees":
+			continue
+
+		for creature in criteria[index]:
+			creature.update(criteria)
+
+
 
 def startSim(criteria):
-	pass
+	setCreatureList(criteria)
+
+	while 1:
+		for event in pygame.event.get():
+			if event.type == pygame.QUIT: sys.exit()
+
+		screen.fill(color)
+		for e in criteria:
+			for i in criteria[e]:
+				screen.blit(i.image, i._pos)
+
+		pygame.display.flip()
+
 
 def getObjects():
 	trees = set()
@@ -50,17 +71,8 @@ def start(trees, sheep, wolves, drones):
 	criteria = getObjects()
 	startSim(criteria)
 
+def refresh():
+	pass
 
-while 1:
-	for event in pygame.event.get():
-		if event.type == pygame.QUIT: sys.exit()
 
-	ballrect = ballrect.move(speed)
-	if ballrect.left < 0 or ballrect.right > width:
-		speed[0] = -speed[0]
-	if ballrect.top < 0 or ballrect.bottom > height:
-		speed[1] = -speed[1]
-
-	# screen.fill(color)
-	# screen.blit(sheep, ballrect)
-	# pygame.display.flip()
+start(20, 5, 5, 5)

@@ -1,11 +1,11 @@
 from random import randint
 
 def randomPosition():
-	x = randint(20, 1380)
-	y = randint(20, 680)
+	x = randint(50, 1300)
+	y = randint(50, 600)
 	return {"x": x, "y": y}
 
 def randomWolfStartingPosition():
-	x = randint(-40, -10)
-	y = randint(-40, -10)
+	x = randint(50, 500)
+	y = randint(50, 500)
 	return {"x": x, "y": y}

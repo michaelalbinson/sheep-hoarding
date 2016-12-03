@@ -1,17 +1,13 @@
 from pygame import image
-<<<<<<< Updated upstream
 from util import randomPosition
-=======
-import math import pow
-
->>>>>>> Stashed changes
+from math import pow
 
 sheep = image.load("small-sheep.gif")
 leaderSheep = image.load("leaderSheep.gif")
 
 class Sheep():
 
-	def __init__(self, isLeader, drones, wolves):
+	def __init__(self, isLeader):
 		self.isLeader = isLeader
 		self.position = randomPosition()
 		self.detectionRadius = 1
@@ -19,11 +15,12 @@ class Sheep():
 		self.neighbor = [0, 0]
 		self.velocity = [0, 0]
 		self.allCreatures = {}
+		self._pos = (self.position["x"], self.position["y"])
 		if (isLeader):
 			self.image = leaderSheep.convert()
 		else:
 			self.image = sheep.convert()
-		self.imRect = self.image.imageRect()
+		self.imRect = self.image.get_rect()
 
 
 	def detectDrone(self):

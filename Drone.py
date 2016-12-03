@@ -1,7 +1,7 @@
 from pygame import image
 from util import randomPosition
 
-sheep = image.load("drone.gif")
+droneImg = image.load("drone.gif")
 
 class Drone():
 
@@ -9,8 +9,11 @@ class Drone():
 		self.position = randomPosition()
 		self.numberOfSheep = numSheep
 		self.detectionRadius = 10
-		self.speed = 10;
+		self.speed = 10
+		self.avoidanceRadius = 50
+		self.image = droneImg
 		self.allCreatures = {}
+		self._pos = (self.position["x"], self.position["y"])
 
 	def update(self, creatures):
 		self.allCreatures = creatures;

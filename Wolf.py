@@ -13,6 +13,7 @@ class Wolf():
 		self.slowSpeed = 7;
 		self.fastSpeed = 10;
 		self.allCreatures = {}
+		self._pos = (self.position["x"], self.position["y"])
 		if(isAlpha):
 			self.image = alphaWolf.convert()
 		else:
