@@ -22,15 +22,15 @@ def setPos(position):
 	return (int(position["x"]), int(position["y"]))
 
 def magnitude(v1, v2):
-	mag_x = v1["x"] + v2["x"]
-	mag_y = v1["y"] + v2["y"]
+	mag_x = v1["x"] - v2["x"]
+	mag_y = v1["y"] - v2["y"]
 	total_magnitude = sqrt(pow(mag_x, 2) + pow(mag_y, 2))
 	return total_magnitude
 
 
 def directionalVector(v1, v2):
-	mag_x = v1["x"] + v2["x"]
-	mag_y = v1["y"] + v2["y"]
+	mag_x = v1["x"] - v2["x"]
+	mag_y = v1["y"] - v2["y"]
 	total_magnitude = sqrt(pow(mag_x, 2) + pow(mag_y, 2))
 	if (total_magnitude == 0):
 		return [0, 0]
