@@ -1,7 +1,0 @@
-from pygame import image
-
-tree = image.load("tree.gif")
-
-class Tree():
-	def __init__(self, position):
-		self.position = position

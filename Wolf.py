@@ -1,10 +1,21 @@
+from pygame import image
+from util import randomWolfStartingPosition
+
+wolf = image.load("wolf.gif")
+alphaWolf = image.load("alpha-wolf.gif")
+
 class Wolf():
 
-	def __init__(self, isAlpha, startingPosition):
+	def __init__(self, isAlpha):
 		self.isAlpha = isAlpha
-		self.position = startingPosition
+		self.position = randomWolfStartingPosition()
 		self.detectionRadius = 20;
-		self.speed = 7;
+		self.slowSpeed = 7;
+		self.fastSpeed = 10;
+		if(isAlpha):
+			self.image = alphaWolf.convert()
+		else:
+			self.image = wolf.convert()
 
 	def isSheepPresent(self):
 		pass

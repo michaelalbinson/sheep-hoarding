@@ -1,8 +1,13 @@
+from pygame import image
+from util import randomPosition
+
+sheep = image.load("drone.gif")
+
 class Drone():
 
-	def __init__(self, startingPosition, numberOfSheep):
-		self.position = startingPosition
-		self.numberOfSheep = numberOfSheep
+	def __init__(self, numSheep):
+		self.position = randomPosition()
+		self.numberOfSheep = numSheep
 		self.detectionRadius = 10
 		self.speed = 10;
 		pass
