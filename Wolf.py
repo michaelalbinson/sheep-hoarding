@@ -10,8 +10,10 @@ class Wolf():
 	
 	def __init__(self, isAlpha):
 		self.isAlpha = isAlpha
+		self.alerted = False
+		self.alertCount = 0
 		self.position = randomWolfStartingPosition()
-		self.detectionRadius = 500;
+		self.detectionRadius = 300;
 		self.speed = 20;
 		self.allCreatures = {}
 		self._pos = (self.position["x"], self.position["y"])
@@ -41,6 +43,10 @@ class Wolf():
 
 
 		return closest_object
+
+	def killSheep(self, sheep):
+		sheep.kill()
+
 	
 	def isSheepPresent(self):
 		closest_sheep = self.detectObject("sheep")
@@ -49,8 +55,11 @@ class Wolf():
 
 		if(mag < self.detectionRadius):
 			temp = directionalVector(closest_sheep.position, self.position, 1)
+		elif(mag <= 10):
+			self.killSheep(closest_sheep)
+			temp = [0, 0]
 		else:
-			temp = [0,0]
+			temp = [0, 0]
 		   
 		return temp
 		   
@@ -73,7 +82,10 @@ class Wolf():
 
 		for object in self.allCreatures["wolves"]:
 			if (object.isAlpha):
-				return object.position
+				newPos = dict()
+				newPos["x"] = object.position["x"] + randint(-150, 150)
+				newPos["y"] = object.position["y"] + randint(-150, 150)
+				return newPos
 		   
 	def findLeader(self, leaderPos):
 		if self.allCreatures == {}:
@@ -108,6 +120,16 @@ class Wolf():
 
 		   
 	def updatePosition(self):
+		if (self.alerted):
+			self.alertCount += 1
+			if (self.alertCount >= 10):
+				self.alertCount = 0
+				self.alerted = False
+				return
+			else:
+				self.move_pack(self.generateRandomDirection())
+				return
+
 		if (self.isAlpha):
 			if (self.isDronePresent() != [0, 0]):
 				self.move_pack(self.isDronePresent())
@@ -123,7 +145,10 @@ class Wolf():
 				self.temp_position_picked = 0
 				self.random_next_pos = 0
 		else:
-			self.followLeader()
+			if (self.isDronePresent() != [0, 0]):
+				self.move_pack(self.isDronePresent())
+			else:
+				self.followLeader()
 				
 
 		   

@@ -9,8 +9,8 @@ def randomPosition():
 	return {"x": x, "y": y}
 
 def randomWolfStartingPosition():
-	x = randint(-100, -20)
-	y = randint(-100, -20)
+	x = randint(-100, 0)
+	y = randint(-100, 0)
 	return {"x": x, "y": y}
 
 def randomDroneStartingPosition():

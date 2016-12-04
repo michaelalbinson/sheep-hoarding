@@ -80,4 +80,4 @@ def start(trees, sheep, wolves, drones):
 	startSim(criteria)
 
 
-start(20, 5, 5, 5)
+start(0, 100, 7, 10)

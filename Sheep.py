@@ -1,6 +1,7 @@
 from pygame import image
 from util import randomPosition, TIME, setPos
 from math import pow
+from random import randint
 
 
 sheep = image.load("small-sheep.gif")
@@ -13,11 +14,12 @@ class Sheep():
 		self.position = randomPosition()
 		self.detectionRadius = 1
 		self._class = "Sheep"
-		self.speed = 3;
+		self.speed = 7;
 		self.neighbor = None
 		self.velocity = [0, 0]
 		self.allCreatures = {}
 		self._pos = (self.position["x"], self.position["y"])
+		self.alive = True
 		if (isLeader):
 			self.image = leaderSheep.convert()
 		else:
@@ -84,8 +86,8 @@ class Sheep():
 
 	def followNeighbor(self):
 		self.findNeighbor()
-		x_mag =  int(self.neighbor.position["x"]) - int(self.position["x"])
-		y_mag = int(self.neighbor.position["y"]) - int(self.position["y"])
+		x_mag =  int(self.neighbor.position["x"]) - int(self.position["x"] + randint(-150, 150))
+		y_mag = int(self.neighbor.position["y"]) - int(self.position["y"] + randint(-150, 150))
 		total_magnitude = pow((pow(x_mag, 2) + pow(y_mag, 2)), .5)
 		if (total_magnitude == 0):
 			return [0, 0]
@@ -94,11 +96,16 @@ class Sheep():
 		directional_vector[1] = y_mag/total_magnitude
 		return directional_vector
 
+	def kill(self):
+		self.alive = False
 
 	def move_sheep(self, temp_vector):
-		self.position["x"] = self.position["x"] + self.speed*TIME*temp_vector[0]
-		self.position["y"] = self.position["y"] + self.speed*TIME*temp_vector[1]
-		self._pos = setPos(self.position)
+		if (self.alive):
+			self.position["x"] = self.position["x"] + self.speed*TIME*temp_vector[0]
+			self.position["y"] = self.position["y"] + self.speed*TIME*temp_vector[1]
+			self._pos = setPos(self.position)
+		else:
+			print("This sheep is dead :(")
 
             
 	def updatePosition(self):
