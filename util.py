@@ -14,8 +14,8 @@ def randomWolfStartingPosition():
 	return {"x": x, "y": y}
 
 def randomDroneStartingPosition():
-	x = randint(1200, 1300)
-	y = randint(50, 200)
+	x = randint(400, 800)
+	y = randint(100, 500)
 	return {"x": x, "y": y}
 
 def setPos(position):

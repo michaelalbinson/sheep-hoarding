@@ -8,3 +8,4 @@ class Tree():
 		self.position = randomPosition()
 		self.image = tree.convert()
 		self._pos = (self.position["x"], self.position["y"])
+		self._class = "Tree"

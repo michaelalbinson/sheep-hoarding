@@ -12,6 +12,7 @@ class Sheep():
 		self.isLeader = isLeader
 		self.position = randomPosition()
 		self.detectionRadius = 1
+		self._class = "Sheep"
 		self.speed = 3;
 		self.neighbor = None
 		self.velocity = [0, 0]

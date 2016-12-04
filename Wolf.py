@@ -12,11 +12,12 @@ class Wolf():
 		self.isAlpha = isAlpha
 		self.position = randomWolfStartingPosition()
 		self.detectionRadius = 500;
-		self.speed = 30;
+		self.speed = 20;
 		self.allCreatures = {}
 		self._pos = (self.position["x"], self.position["y"])
 		self.temp_position_picked = 0
 		self.random_next_pos = [0, 0]
+		self._class = "Wolf"
 		if(isAlpha):
 			self.image = alphaWolf.convert()
 		else:
@@ -29,13 +30,14 @@ class Wolf():
 		if self.allCreatures == {}:
 			return
 
-		for object in self.allCreatures[creature]:
-			closest_object = None
-			closest_object_dist = 2000
-			temp_magnitude = magnitude(object.position, self.position)
+		closest_object_dist = 200000
+		closest_object = None
+		for animal in self.allCreatures[creature]:
+			temp_magnitude = magnitude(animal.position, self.position)
 
-			if(closest_object_dist < self.detectionRadius or temp_magnitude < closest_object_dist):
-				closest_object = object
+			if(temp_magnitude < closest_object_dist):
+				closest_object = animal
+				closest_object_dist = temp_magnitude
 
 
 		return closest_object
@@ -53,18 +55,15 @@ class Wolf():
 		return temp
 		   
 	def isDronePresent(self):
-		closest_drones = self.detectObject("drones")
-		closest_sheep_x = pow(closest_drones.position["x"], 2)
-		closest_sheep_y = pow(closest_drones.position["y"], 2)
-		   
-		if(sqrt( closest_sheep_x + closest_sheep_y) < self.detectionRadius):
-			closest_sheep_x_dist = closest_drones.position["x"] - self.position["x"]
-			closest_sheep_y_dist = closest_drones.position["y"] - self.position["y"]
-			temp_vector = [closest_sheep_x_dist, closest_sheep_y_dist]
+		closest_drone = self.detectObject("drones")
+		mag = magnitude(closest_drone.position, self.position)
+
+		if (mag < self.detectionRadius):
+			temp = directionalVector(closest_drone.position, self.position, -1)
 		else:
-			temp_vector = [0,0]
-		   
-		return temp_vector
+			temp = [0, 0]
+
+		return temp
 	
 	def findLeaderPos(self):
 		if (self.allCreatures == {}):
@@ -86,7 +85,8 @@ class Wolf():
 			return directionalVector(leaderPos, self.position, 1)
 		   
 	def followLeader(self):
-		return self.findLeader(self.findLeaderPos())
+		v = self.findLeader(self.findLeaderPos())
+		self.move_pack(v)
 		   
 	def move_pack(self, temp_vector):
 		self.position["x"] = self.position["x"] + self.speed*TIME*temp_vector[0]
@@ -109,6 +109,8 @@ class Wolf():
 		   
 	def updatePosition(self):
 		if (self.isAlpha):
+			if (self.isDronePresent() != [0, 0]):
+				self.move_pack(self.isDronePresent())
 			if(self.isSheepPresent() == [0, 0]):
 				if(self.temp_position_picked == 0):
 					self.random_next_pos = self.generateRandomDirection()
@@ -121,10 +123,7 @@ class Wolf():
 				self.temp_position_picked = 0
 				self.random_next_pos = 0
 		else:
-			if(self.isSheepPresent() == [0,0]):
-				self.followLeader()
-			else:
-				self.move_pack(self.isSheepPresent())
+			self.followLeader()
 				
 
 		   
